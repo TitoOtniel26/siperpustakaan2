@@ -3,8 +3,8 @@
         <div class="card h-100">
             <h5 class="card-header"><strong>Data User</strong></h5>
             <div class="card-body">
-                <button type="button" class="btn btn-primary btn-md text-right btntambah" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-plus"></i>
-                    Tambah</button>
+                <a type="button" class="btn btn-primary btn-md text-right btntambah" href="{{ route('tambahkategori') }}"><i class="fa fa-plus"></i>
+                    Tambah</a>
                     @if($errors->any())
                         <div class="alert mt-3 alert-primary" role="alert">
                             {{ $errors->first()}}

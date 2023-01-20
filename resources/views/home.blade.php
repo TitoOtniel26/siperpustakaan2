@@ -11,8 +11,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('img/logo.png') }}" rel="icon">
-    <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('img/iconsmpwarga.png') }}" rel="icon">
+    <link href="{{ asset('img/iconsmpwarga.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -84,7 +84,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">SIPP</span>
+                <span class="d-none d-lg-block text-center">SISTEM INFORMASI PERPUSTAKAAN</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -344,6 +344,11 @@
                         </a>
                     </li>
                     <li>
+                        <a class="{{ $collapsemenu == 'kelas' ? 'active' : '' }}" href="{{ route('kelas') }}">
+                            <i class="bi bi-circle"></i><span>Kelas</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="{{ $collapsemenu == 'buku' ? 'active' : '' }}" href="{{ route('buku') }}">
                             <i class="bi bi-circle"></i><span>Buku</span>
                         </a>
@@ -354,7 +359,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'pengadaan' ? '' : 'collapsed' ?>" href="">
+                <a class="nav-link <?= $parentmenu == 'pengadaan' ? '' : 'collapsed' ?>" href="{{ route('pencarianbuku') }}">
                     <i class="fa fa-search"></i>
                     <span>Cari Buku</span>
                 </a>
@@ -370,7 +375,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'pengeluaran' ? '' : 'collapsed' ?>" href="">
+                <a class="nav-link <?= $parentmenu == 'pengembalian' ? '' : 'collapsed' ?>" href="{{ route('pengembalian') }}">
                     <i class="fa fa-download"></i>
                     <span>Pengembalian</span>
                 </a>
@@ -378,7 +383,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>" href="">
+                <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>" href="{{ route('laporan') }}">
                     <i class="ri-newspaper-line"></i>
                     <span>Laporan</span>
                 </a>
