@@ -35,14 +35,26 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     #Route For Kategori
     Route::get('kategori','kategori')->name('kategori');
     Route::get('tambahkategori','tambahKategori')->name('tambahkategori');
+    Route::post('simpantambahkategori','simpanTambahKategori')->name('simpantambahkategori');
+    Route::get('editkategori/{id}','editKategori')->name('editkategori');
+    Route::post('simpaneditkategori','simpanEditKategori')->name('simpaneditkategori');
+    Route::get('hapusdatakategori/{id}','hapusDataKategori')->name('hapusdatakategori');
 
     #Route For Rak
     Route::get('rak','rak')->name('rak');
     Route::get('tambahrak','tambahRak')->name('tambahrak');
+    Route::post('simpantambahrak','simpanTambahRak')->name('simpantambahrak');
+    Route::get('editrak/{id}','editRak')->name('editrak');
+    Route::post('simpaneditrak','simpanEditRak')->name('simpaneditrak');
+    Route::get('hapusrak/{id}','hapusRak')->name('hapusrak');
 
     #Route For Kelas
     Route::get('kelas','kelas')->name('kelas');
     Route::get('tambahkelas','tambahKelas')->name('tambahkelas');
+    Route::post('simpantambahkelas','simpanTambahKelas')->name('simpantambahkelas');
+    Route::get('editkelas/{id}','editKelas')->name('editkelas');
+    Route::post('simpaneditkelas','simpanEditKelas')->name('simpaneditkelas');
+    Route::get('hapuskelas/{id}','hapusKelas')->name('hapuskelas');
 
     Route::get('buku','buku')->name('buku');
     Route::get('tambahbuku','tambahBuku')->name('tambahbuku');

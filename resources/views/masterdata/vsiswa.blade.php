@@ -1,7 +1,7 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Data User</strong></h5>
+            <h5 class="card-header"><strong>Data Siswa</strong></h5>
             <div class="card-body">
                 <a type="button" class="btn btn-primary btn-md text-right btntambah" href="{{  route('tambahsiswa') }}"><i class="fa fa-plus"></i>
                     Tambah</a>

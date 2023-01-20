@@ -7,12 +7,12 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-3">
                             <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg"
-                                class="img-thumbnail" id="output">
+                                class="img-thumbnail" id="preview">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="">Input Foto</label>
-                        <input type="file" name="foto" class="form-control">
+                        <input type="file" name="foto" class="form-control" accept="image/png, image/gif, image/jpeg" onchange="tampilkanPreview(this, 'preview')">
                     </div>
                     <div class="form-group">
                         <label for="">NISN</label>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Kelas</label>
-                        <select name="jenis_kelamin" class="form-control">
+                        <select name="kelas" class="form-control">
                             <option value="Laki-Laki">Laki-Laki</option>
                         </select>
                     </div>

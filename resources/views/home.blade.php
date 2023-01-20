@@ -460,7 +460,7 @@
         let base_url = window.location.origin;
 
         $(document).ready(function() {
-            $('#tbinventory').DataTable({
+            $('#tbperpustakaan').DataTable({
                 pageLength: 10,
                 lengthMenu: [10, 25, 50]
             });

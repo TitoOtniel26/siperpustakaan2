@@ -1,29 +1,37 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Data User</strong></h5>
+            <h5 class="card-header"><strong>Data Rak</strong></h5>
             <div class="card-body">
-                <a type="button" class="btn btn-primary btn-md text-right btntambah" href="{{ route('tambahrak') }}"><i class="fa fa-plus"></i>
-                    Tambah</a>
-                    @if($errors->any())
-                        <div class="alert mt-3 alert-primary" role="alert">
-                            {{ $errors->first()}}
-                        </div>
-                    @endif
+                <a type="button" class="btn btn-primary btn-md text-right btntambah" href="{{ route('tambahrak') }}"><i
+                        class="fa fa-plus"></i>Tambah</a>
+                @if ($errors->any())
+                    <div class="alert mt-3 alert-primary" role="alert">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered display nowrap" id="tbinventory"
+                    <table class="table table-hover table-bordered display nowrap" id="tbperpustakaan"
                         style="width : 100%;">
                         <thead>
                             <tr>
-                                <th>Nomor</th>
-                                <th>Nama User</th>
-                                <th>Username</th>
-                                <th>Hak Akses</th>
+                                <th style="width : 6%;">Nomor</th>
+                                <th>Nama Rak</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
+                            <?php $i = 1; ?>
+                            @foreach ($datarak as $item)
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $item->namarak }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('editrak',['id'=> base64_encode($item->id)]) }}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('hapusrak',['id' => base64_encode($item->id)]) }}" type="button" class="btn btn-danger btn-sm btnhapus"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
