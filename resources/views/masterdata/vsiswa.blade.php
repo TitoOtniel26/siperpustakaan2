@@ -11,19 +11,35 @@
                         </div>
                     @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered display nowrap" id="tbinventory"
+                    <table class="table table-hover table-bordered" id="tbperpustakaan"
                         style="width : 100%;">
                         <thead>
                             <tr>
                                 <th>Nomor</th>
-                                <th>Nama User</th>
+                                <th>NISN</th>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
                                 <th>Username</th>
-                                <th>Hak Akses</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
+                            <?php $i = 1; ?>
+                            @foreach($datauser as $item)
+                            <tr>
+                                <td>{{ $i++ }}</td>
+                                <td>{{ $item->no_identitas }}</td>
+                                <td>{{ $item->nama_user }}</td>
+                                <td>{{ $item->kelas }}</td>
+                                <td>{{ $item->username }}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <a type="button" href="{{ route('editsiswa',['id' => base64_encode($item->id)]) }}" class="btn btn-primary btn-sm btnedit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fa fa-pencil"></i></a>
+                                        <a type="button" href="{{ route('hapusdatasiswa',['id' => base64_encode($item->id)]) }}" class="btn btn-danger btn-sm btnhapus" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data""><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

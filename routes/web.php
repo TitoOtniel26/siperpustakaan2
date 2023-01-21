@@ -27,6 +27,11 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     #Route For Siswa
     Route::get('siswa','siswa')->name('siswa');
     Route::get('tambahsiswa','tambahSiswa')->name('tambahsiswa');
+    Route::post('simpantambahsiswa','saveTambahSiswa')->name('simpantambahsiswa');
+    Route::get('editsiswa/{id}','editSiswa')->name('editsiswa');
+    Route::post('simpaneditsiswa','simpanEditSiswa')->name('simpaneditsiswa');
+    Route::post('savepasswordbaru','savePasswordBaru')->name('savepasswordbaru');
+    Route::get('hapusdatasiswa/{id}','hapusDataSiswa')->name('hapusdatasiswa');
 
     #Route For Petugas
     Route::get('petugas','petugas')->name('petugas');

@@ -7,13 +7,14 @@ use App\Models\kelas;
 use App\Models\kategori;
 use App\Models\usermodel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Cmasterdata extends Controller
 {
     protected $kategori;
     protected $rak;
     protected $kelas;
-    
+
     function __construct()
     {
         $this->kategori = new kategori();
@@ -40,6 +41,7 @@ class Cmasterdata extends Controller
         $data['collapsing'] = "true";
         $data['parentmenu'] = "master";
         $data['jsitem'] = ["siswa"];
+        $data['datakelas'] = $this->kelas->get();
 
         return view('home', $data);
     }
@@ -56,14 +58,192 @@ class Cmasterdata extends Controller
             "no_telp" => ["required"],
         ]);
 
-        
+
         $name = $request->file('foto')->getClientOriginalName();
         $mergenamefoto = date('ymdhis') . $name;
 
-        $path = $request->file('uploadfoto')->move('img/assetimg', $mergenamefoto);
+        $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
 
-        $query = $this->
+        $post = $request->all();
 
+        $query = DB::table('users')->insert([
+            "no_identitas" => $post['no_identitas'],
+            "nama_user" => $post['nama_user'],
+            "jenis_kelamin" => $post['jenis_kelamin'],
+            "alamat" => $post['alamat'],
+            "kelas" => $post['kelas'],
+            "no_telp" => $post['no_telp'],
+            "status" => "Siswa",
+            "foto" => $mergenamefoto,
+            "username" => $post['username'],
+            "password" => bcrypt($post['password'])
+        ]);
+
+        if ($query) {
+            $result =
+                [
+                    'msg' => 'Simpan Data Sukses'
+                ];
+        } else {
+            $result =
+                [
+                    'msg' => 'Simpan Data Gagal'
+                ];
+        }
+
+        return redirect()->route('siswa')->withErrors($result);
+    }
+
+    public function editSiswa($id)
+    {
+        $idsiswa = base64_decode($id);
+
+        $data['contentview'] = "masterdata/veditsiswa";
+        $data['collapsemenu'] = "siswa";
+        $data['collapsing'] = "true";
+        $data['parentmenu'] = "master";
+        $data['jsitem'] = ["siswa"];
+        $data['datakelas'] = $this->kelas->get();
+        $data['datasiswa'] = DB::table('users')->where('id', '=', $idsiswa)->get();
+
+        return view('home', $data);
+    }
+
+    public function simpanEditSiswa(Request $request)
+    {
+        $post = $request->all();
+        if (!$request->file('foto')) {
+            $credentials = $request->validate([
+                "id_siswa" => ["required"],
+                "no_identitas" => ["required"],
+                "nama_user" => ["required"],
+                "jenis_kelamin" => ["required"],
+                "alamat" => ["required"],
+                "kelas" => ["required"],
+                "no_telp" => ["required"],
+            ]);
+
+
+            $query = DB::table('users')->where('id', '=', base64_decode($request->id_siswa))->update([
+                "no_identitas" => $post['no_identitas'],
+                "nama_user" => $post['nama_user'],
+                "jenis_kelamin" => $post['jenis_kelamin'],
+                "alamat" => $post['alamat'],
+                "kelas" => $post['kelas'],
+                "no_telp" => $post['no_telp'],
+                "status" => "Siswa",
+                "username" => $post['username'],
+                "password" => bcrypt($post['password'])
+            ]);
+
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Update Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Update Data Gagal'
+                    ];
+            }
+        } else {
+            $credentials = $request->validate([
+                "id_siswa" => ["required"],
+                "no_identitas" => ["required"],
+                "nama_user" => ["required"],
+                "jenis_kelamin" => ["required"],
+                "alamat" => ["required"],
+                "kelas" => ["required"],
+                "no_telp" => ["required"],
+                "foto" => ["required"],
+                "nama_foto_lama" => ["required"],
+            ]);
+
+
+            $name = $request->file('foto')->getClientOriginalName();
+            $mergenamefoto = date('ymdhis') . $name;
+            $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+
+            $namafotolama = base64_decode($post['nama_foto_lama']);
+
+            if (file_exists(public_path('img/assetimg/' . $namafotolama))) {
+                unlink(public_path('img/assetimg/' . $namafotolama));
+            }
+
+            $query = DB::table('users')->where('id', '=', base64_decode($request->id_siswa))->update([
+                "no_identitas" => $post['no_identitas'],
+                "nama_user" => $post['nama_user'],
+                "jenis_kelamin" => $post['jenis_kelamin'],
+                "alamat" => $post['alamat'],
+                "kelas" => $post['kelas'],
+                "no_telp" => $post['no_telp'],
+                "status" => "Siswa",
+                "username" => $post['username'],
+                "foto" => $mergenamefoto
+            ]);
+
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Update Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Update Data Gagal'
+                    ];
+            }
+        }
+
+        return redirect()->route('siswa')->withErrors($result);
+    }
+
+    public function savePasswordBaru(Request $request)
+    {
+        $credentials = $request->validate([
+            "id_siswa" => ["required"],
+            "password" => ["required"]
+        ]);
+
+        $post = $request->all();
+
+        $query = DB::table('users')->where('id','=',base64_decode($post['id_siswa']))->update([
+            "password" => bcrypt($post['password'])
+        ]);
+
+        if($query)
+        {
+            return back()->withErrors(["msg" => "Update Password Berhasil!"]);
+        }
+        else
+        {
+            return back()->withErrors(["msg" => "Update Password Gagal!"]);
+        }
+    }
+
+    public function hapusDataSiswa($id)
+    {
+        $getdatasiswa = DB::table('users')->where('id','=',base64_decode($id))->get();
+
+        foreach($getdatasiswa as $item)
+        {
+            
+            if (file_exists(public_path('img/assetimg/' . $item->foto))) {
+                unlink(public_path('img/assetimg/' . $item->foto));
+            }
+        }
+
+        $query = DB::table('users')->where('id','=',base64_decode($id))->delete();
+
+        if($query)
+        {
+            return back()->withErrors(["msg" => "Hapus Data Berhasil!"]);
+        }
+        else
+        {
+            return back()->withErrors(["msg" => "Hapus Data Gagal!"]);
+        }
     }
 
     public function petugas()
@@ -379,9 +559,9 @@ class Cmasterdata extends Controller
 
     public function hapusKelas($id)
     {
-        $query = $this->kelas->where('id','=',base64_decode($id))->delete();
+        $query = $this->kelas->where('id', '=', base64_decode($id))->delete();
 
-        
+
         if ($query) {
             $result =
                 [
