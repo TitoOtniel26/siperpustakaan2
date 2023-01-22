@@ -37,7 +37,7 @@
                                     <td>
                                         <div class="text-center">
                                             <a type="button" href="{{ route('editbuku',['id' => base64_encode($item->kode_buku )]) }}" class="btn btn-primary btn-sm btnedit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fa fa-pencil"></i></a>
-                                            <a type="button" href="{{ route('hapusdatasiswa',['id' => base64_encode($item->kode_buku )]) }}" class="btn btn-danger btn-sm btnhapus" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data""><i class="fa fa-trash"></i></a>
+                                            <a type="button" href="{{ route('hapusdatabuku',['id' => base64_encode($item->kode_buku )]) }}" class="btn btn-danger btn-sm btnhapus" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data""><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>

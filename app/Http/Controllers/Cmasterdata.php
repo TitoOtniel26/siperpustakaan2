@@ -811,37 +811,51 @@ class Cmasterdata extends Controller
 
         $post = $request->all();
 
-
-        $name = $request->file('foto')->getClientOriginalName();
-        $mergenamefoto = date('ymdhis') . $name;
-        $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
-
-        $query = DB::table('buku')->insert([
-            "kode_buku" => $post["kode_buku"],
-            "judul_buku" => $post["judul_buku"],
-            "id_kategori" => $post["id_kategori"],
-            "tahun_buku" => $post["tahun_buku"],
-            "penerbit" => $post["penerbit"],
-            "pengarang" => $post["pengarang"],
-            "id_rak" => $post["id_rak"],
-            "jumlah" => $post["jumlah"],
-            "foto" => $mergenamefoto,
-            "deskripsi" => $post["deskripsi"],
-        ]);
-
-        if ($query) {
+        $checkduplikasi =  DB::table('buku')->where('kode_buku','=',$post['kode_buku'])->get();
+        
+        if(!$checkduplikasi->isEmpty())
+        {
+            echo "Hai";
             $result =
                 [
-                    'msg' => 'Simpan Data Sukses'
-                ];
-        } else {
-            $result =
-                [
-                    'msg' => 'Simpan Data Gagal'
-                ];
+                    'msg' => 'Kode Buku Sudah Ada!'
+                ]; 
+
+                return back()->withErrors($result);
         }
-
-        return redirect()->route('buku')->withErrors($result);
+        else
+        {
+            $name = $request->file('foto')->getClientOriginalName();
+            $mergenamefoto = date('ymdhis') . $name;
+            $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+    
+            $query = DB::table('buku')->insert([
+                "kode_buku" => $post["kode_buku"],
+                "judul_buku" => $post["judul_buku"],
+                "id_kategori" => $post["id_kategori"],
+                "tahun_buku" => $post["tahun_buku"],
+                "penerbit" => $post["penerbit"],
+                "pengarang" => $post["pengarang"],
+                "id_rak" => $post["id_rak"],
+                "jumlah" => $post["jumlah"],
+                "foto" => $mergenamefoto,
+                "deskripsi" => $post["deskripsi"],
+            ]);
+    
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Simpan Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Simpan Data Gagal'
+                    ];
+            }
+    
+            return redirect()->route('buku')->withErrors($result);
+        }
     }
 
     public function editBuku($id)
@@ -941,5 +955,35 @@ class Cmasterdata extends Controller
         }
 
         return redirect()->route('buku')->withErrors($result);
+    }
+
+    public function hapusDatabuku($id)
+    {
+        $getdatabuku = DB::table('buku')->where('kode_buku', '=', base64_decode($id))->get();
+
+        foreach($getdatabuku as $item)
+        {
+            if (file_exists(public_path('img/assetimg/' . $item->foto))) {
+                unlink(public_path('img/assetimg/' . $item->foto));
+            }
+        }
+
+
+        $query = DB::table('buku')->where('kode_buku', '=', base64_decode($id))->delete();
+
+
+        if ($query) {
+            $result =
+                [
+                    'msg' => 'Hapus Data Sukses'
+                ];
+        } else {
+            $result =
+                [
+                    'msg' => 'Hapus Data Gagal'
+                ];
+        }
+
+        return redirect()->route('kelas')->withErrors($result);
     }
 }

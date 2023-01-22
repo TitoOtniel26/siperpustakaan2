@@ -3,6 +3,11 @@
         <div class="card h-100">
             <h5 class="card-header"><strong>Tambah Buku</strong></h5>
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert mt-3 alert-primary" role="alert">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
                 <form action="{{ route('simpantambahbuku') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row d-flex justify-content-center">

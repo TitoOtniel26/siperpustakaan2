@@ -72,6 +72,7 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     Route::post('simpantambahbuku','simpanTambahBuku')->name('simpantambahbuku');
     Route::get('editbuku/{id}','editBuku')->name('editbuku');
     Route::post('simpaneditbuku','simpanEditBuku')->name('simpaneditbuku');
+    Route::get('hapusdatabuku/{id}','hapusDatabuku')->name('hapusdatabuku');
 });
 
 Route::prefix('peminjaman')->controller(Cpeminjaman::class)->group(function(){
@@ -84,6 +85,7 @@ Route::prefix('pengembalian')->controller(Cpengembalian::class)->group(function(
 
 Route::prefix('pencarianbuku')->controller(Cpencarianbuku::class)->group(function(){
     Route::get('/','pencarianbuku')->name('pencarianbuku');
+    Route::get('detailbuku/{id}','detailBuku')->name('detailbuku');
 });
 
 Route::prefix('laporan')->controller(Claporan::class)->group(function(){

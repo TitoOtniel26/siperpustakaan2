@@ -1,29 +1,43 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Data User</strong></h5>
+            <h5 class="card-header"><strong>Pencarian Buku</strong></h5>
             <div class="card-body">
-                <button type="button" class="btn btn-primary btn-md text-right btntambah" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-plus"></i>
-                    Tambah</button>
-                    @if($errors->any())
-                        <div class="alert mt-3 alert-primary" role="alert">
-                            {{ $errors->first()}}
-                        </div>
-                    @endif
+                @if ($errors->any())
+                    <div class="alert mt-3 alert-primary" role="alert">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered display nowrap" id="tbinventory"
-                        style="width : 100%;">
+                    <table class="table table-hover table-bordered" id="tbperpustakaan"
+                        style="width : 100%; table-layout : fixed;">
                         <thead>
                             <tr>
-                                <th>Nomor</th>
-                                <th>Nama User</th>
-                                <th>Username</th>
-                                <th>Hak Akses</th>
+                                <th>Kode Buku</th>
+                                <th>Judul Buku</th>
+                                <th>Penerbit</th>
+                                <th>Pengarang</th>
+                                <th>Kategori</th>
+                                <th>Rak</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
+                            @foreach ($databuku as $item)
+                                <tr>
+                                    <td>{{ $item->kode_buku  }}</td>
+                                    <td>{{ $item->judul_buku  }}</td>
+                                    <td>{{ $item->penerbit  }}</td>
+                                    <td>{{ $item->pengarang  }}</td>
+                                    <td>{{ $item->nama_kategori  }}</td>
+                                    <td>{{ $item->namarak }}</td>
+                                    <td>
+                                        <div class="text-center">
+                                            <a type="button" href="{{ route('detailbuku',['id' => base64_encode($item->kode_buku )]) }}" class="btn btn-primary btn-sm btninfo" data-bs-toggle="tooltip" data-bs-placement="top" title="Informasi Buku"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -31,18 +45,3 @@
         </div>
     </div>
 </section>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Edit Data User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
