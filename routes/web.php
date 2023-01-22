@@ -77,6 +77,11 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
 
 Route::prefix('peminjaman')->controller(Cpeminjaman::class)->group(function(){
     Route::get('/','peminjaman')->name('peminjaman');
+    Route::get('tambahpeminjaman','tambahPeminjaman')->name('tambahpeminjaman');
+    Route::post('getdatabuku','getDataBuku')->name('getdatabuku');
+    Route::post('simpanpeminjaman','simpanPeminjaman')->name('simpanpeminjaman');
+    Route::get('editdatapeminjaman/{id}','editDatapeminjaman')->name('editdatapeminjaman');
+    Route::get('hapusdatapeminjaman/{id}','hapusDataPeminjaman')->name('hapusdatapeminjaman');
 });
 
 Route::prefix('pengembalian')->controller(Cpengembalian::class)->group(function(){

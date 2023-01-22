@@ -1,29 +1,45 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Data User</strong></h5>
+            <h5 class="card-header"><strong>Data Peminjaman</strong></h5>
             <div class="card-body">
-                <button type="button" class="btn btn-primary btn-md text-right btntambah" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-plus"></i>
-                    Tambah</button>
-                    @if($errors->any())
-                        <div class="alert mt-3 alert-primary" role="alert">
-                            {{ $errors->first()}}
-                        </div>
-                    @endif
+                <a type="button" class="btn btn-primary btn-md text-right btntambah ml-2"
+                    href="{{ route('tambahpeminjaman') }}"><i class="fa fa-plus"></i>
+                    Tambah</a>
+                    
+                @if ($errors->any())
+                    <div class="alert mt-3 alert-primary" role="alert">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered display nowrap" id="tbinventory"
+                    <table class="table table-hover table-bordered display" id="tbperpustakaan"
                         style="width : 100%;">
                         <thead>
                             <tr>
-                                <th>Nomor</th>
-                                <th>Nama User</th>
-                                <th>Username</th>
-                                <th>Hak Akses</th>
+                                <th>Kode Peminjaman</th>
+                                <th>Nama Petugas</th>
+                                <th>Nama Anggota</th>
+                                <th>Tgl Pinjam</th>
+                                <th>Tgl Kembali</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
+                            <?php $i = 1; ?>
+                            @foreach ($datapeminjaman as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->namapetugas }}</td>
+                                    <td>{{ $item->namaanggota }}</td>
+                                    <td>{{ $item->tgl_pinjam }}</td>
+                                    <td>{{ $item->tgl_kembali }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('editdatapeminjaman',['id'=> base64_encode($item->id)]) }}" type="button" class="btn btn-primary btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Data"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('hapusdatapeminjaman',['id' => base64_encode($item->id)]) }}" type="button" class="btn btn-danger btn-sm btnhapus"  data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

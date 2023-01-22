@@ -455,11 +455,6 @@
 
         $('.breadcrumb').html(getBreadcrumbs());
     </script>
-
-    @foreach ($jsitem as $js)
-        <script src='{{ asset('js/' . $js . '.min.js') }}'></script>
-    @endforeach
-
     <script>
         let base_url = window.location.origin;
 
@@ -468,6 +463,8 @@
                 pageLength: 10,
                 lengthMenu: [10, 25, 50]
             });
+
+            $('.select2').select2();
         });
     </script>
 
@@ -505,6 +502,24 @@
                     );
                 }
             }
+        }
+
+        function minTanggal(inputdateclass) {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            today = yyyy + '-' + mm + '-' + dd;
+            $('.' + inputdateclass).attr("min", today);
         }
     </script>
 
