@@ -968,10 +968,8 @@ class Cmasterdata extends Controller
             }
         }
 
-
         $query = DB::table('buku')->where('kode_buku', '=', base64_decode($id))->delete();
-
-
+        
         if ($query) {
             $result =
                 [

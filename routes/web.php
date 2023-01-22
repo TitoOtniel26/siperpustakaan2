@@ -82,10 +82,17 @@ Route::prefix('peminjaman')->controller(Cpeminjaman::class)->group(function(){
     Route::post('simpanpeminjaman','simpanPeminjaman')->name('simpanpeminjaman');
     Route::get('editdatapeminjaman/{id}','editDatapeminjaman')->name('editdatapeminjaman');
     Route::get('hapusdatapeminjaman/{id}','hapusDataPeminjaman')->name('hapusdatapeminjaman');
+    Route::post('caripeminjaman','cariDataPeminjaman')->name('caripeminjaman');
 });
 
 Route::prefix('pengembalian')->controller(Cpengembalian::class)->group(function(){
     Route::get('/','pengembalian')->name('pengembalian');
+    Route::get('tambahpengembalian','tambahPengembalian')->name('tambahpengembalian');
+    Route::get('prosespengembalian/{id}','prosesPengembalian')->name('prosespengembalian');
+    Route::post('simpanprosespengembalian','simpanProsespengembalian')->name('simpanprosespengembalian');
+    Route::post('caripengembalian','cariPengembalian')->name('caripengembalian');
+    Route::get('detailpengembalian/{id}','detailPengembalian')->name('detailpengembalian');
+    Route::get('hapusdetailpengembalian/{id}','hapusDetailPengembalian')->name('hapusdetailpengembalian');
 });
 
 Route::prefix('pencarianbuku')->controller(Cpencarianbuku::class)->group(function(){

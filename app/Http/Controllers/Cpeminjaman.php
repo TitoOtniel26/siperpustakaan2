@@ -126,7 +126,25 @@ class Cpeminjaman extends Controller
         }
 
         return redirect()->route('peminjaman')->withErrors($result);
+    }
 
+    public function cariDataPeminjaman(Request $request)
+    {
+        $post = $request->all();
+
+        $credentials = $request->validate([
+            "tglawal" => ["required"],
+            "tglakhir" => ["required"]
+        ]);
+
+        $data['contentview'] = "peminjaman/vpeminjaman";
+        $data['collapsemenu'] = "";
+        $data['collapsing'] = "false";
+        $data['parentmenu'] = "peminjaman";
+        $data['jsitem'] = ["peminjaman"];
+        $data['datapeminjaman'] = DB::select('select peminjaman.id, (select users.nama_user from users where users.id = peminjaman.id_user) as namapetugas, (select users.nama_user from users where users.id = peminjaman.id_anggota) as namaanggota, peminjaman.tgl_pinjam, peminjaman.tgl_kembali from peminjaman  WHERE peminjaman.is_selesai = 0 and peminjaman.tgl_pinjam BETWEEN "'.$post['tglawal'].'" and "'.$post['tglakhir'].'"');
+        
+        return view('home',$data);
 
     }
 }

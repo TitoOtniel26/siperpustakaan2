@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">NISN / Nama Anggota</label><br>
-                        <select name="id_anggota" class="form-control" style="width: 100%;" disabled>
+                        <select name="id_anggota" class="form-control" style="width: 100%;" readonly>
                             @foreach ($datasiswa as $anggota)
                                 <option value="{{ $anggota->id }}" noidentitas="{{ $anggota->no_identitas }}"
                                     <?= $anggota->id == $item->id_anggota ? 'selected' : '' ?>>
@@ -50,7 +50,7 @@
                     @endforeach
                 </select>
             </div>
-
+            
             <table class="table table-bordered table-hover mt-4">
                 <thead>
                     <tr>
