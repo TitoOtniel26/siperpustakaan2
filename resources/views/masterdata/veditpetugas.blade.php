@@ -1,7 +1,7 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Edit Siswa</strong></h5>
+            <h5 class="card-header"><strong>Edit Petugas</strong></h5>
             <div class="card-body">
                 @if ($errors->any())
                     <div class="alert mt-3 alert-primary" role="alert">
@@ -13,10 +13,10 @@
                         Ganti Password
                     </button>
                 </div>
-                <form action="{{ route('simpaneditsiswa') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('saveeditpetugas') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @foreach ($datasiswa as $item)
-                        <input type="hidden" value="{{ base64_encode($item->id) }}" name="id_siswa">
+                    @foreach ($datapetugas as $item)
+                        <input type="hidden" value="{{ base64_encode($item->id) }}" name="id_petugas">
                         <input type="hidden" value="{{ base64_encode($item->foto) }}" name="nama_foto_lama">
 
                         <div class="row d-flex justify-content-center">
@@ -54,16 +54,6 @@
                             <textarea name="alamat" class="form-control">{{ $item->alamat }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="">Kelas</label>
-                            <select name="kelas" class="form-control">
-                                @foreach ($datakelas as $kelas)
-                                    <option value="{{ $kelas->id }}"
-                                        <?= $kelas->id == $item->kelas ? 'selected' : '' ?>>{{ $kelas->namakelas }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="">No Telepon</label>
                             <input type="text" name="no_telp" class="form-control" value="{{ $item->no_telp }}">
                         </div>
@@ -90,10 +80,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('savepasswordbarusiswa') }}" method="POST">
+                <form action="{{ route('savepasswordbarupetugas') }}" method="POST">
                     @csrf
-                    @foreach ($datasiswa as $item)
-                    <input type="hidden" value="{{ base64_encode($item->id) }}" name="id_siswa">
+                    @foreach ($datapetugas as $item)
+                    <input type="hidden" value="{{ base64_encode($item->id) }}" name="id_petugas">
                     @endforeach
                     <div class="form-group">
                         <label for="">Ganti Password</label>

@@ -1,7 +1,7 @@
 <section>
     <div class="container-fluid">
         <div class="card h-100">
-            <h5 class="card-header"><strong>Data User</strong></h5>
+            <h5 class="card-header"><strong>Data Petugas</strong></h5>
             <div class="card-body">
                 <a type="button" class="btn btn-primary btn-md text-right" href="{{ route('tambahpetugas') }}"><i class="fa fa-plus"></i>Tambah</a>
                 @if ($errors->any())
@@ -10,18 +10,33 @@
                     </div>
                 @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered display nowrap" id="tbinventory"
+                    <table class="table table-hover table-bordered display nowrap" id="tbperpustakaan"
                         style="width : 100%;">
                         <thead>
                             <tr>
                                 <th>Nomor</th>
+                                <th>NIP</th>
                                 <th>Nama User</th>
                                 <th>Username</th>
-                                <th>Hak Akses</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 1; ?>
+                            @foreach($datapetugas as $item)
+                            <tr>
+                                <td>{{ $i++ }}</td>
+                                <td>{{ $item->no_identitas }}</td>
+                                <td>{{ $item->nama_user }}</td>
+                                <td>{{ $item->username }}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <a type="button" href="{{ route('editpetugas',['id' => base64_encode($item->id)]) }}" class="btn btn-primary btn-sm btnedit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fa fa-pencil"></i></a>
+                                        <a type="button" href="{{ route('hapusdatapetugas',['id' => base64_encode($item->id)]) }}" class="btn btn-danger btn-sm btnhapus" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data""><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

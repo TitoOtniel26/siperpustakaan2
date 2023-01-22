@@ -30,13 +30,18 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     Route::post('simpantambahsiswa','saveTambahSiswa')->name('simpantambahsiswa');
     Route::get('editsiswa/{id}','editSiswa')->name('editsiswa');
     Route::post('simpaneditsiswa','simpanEditSiswa')->name('simpaneditsiswa');
-    Route::post('savepasswordbaru','savePasswordBaru')->name('savepasswordbaru');
+    Route::post('savepasswordbarusiswa','savePasswordBaruSiswa')->name('savepasswordbarusiswa');
     Route::get('hapusdatasiswa/{id}','hapusDataSiswa')->name('hapusdatasiswa');
 
     #Route For Petugas
     Route::get('petugas','petugas')->name('petugas');
     Route::get('tambahpetugas','tambahPetugas')->name('tambahpetugas');
-
+    Route::post('simpantambahpetugas','saveTambahPetugas')->name('simpantambahpetugas');
+    Route::get('editpetugas/{id}','editPetugas')->name('editpetugas');
+    Route::post('saveeditpetugas','saveEditPetugas')->name('saveeditpetugas');
+    Route::post('savepasswordbarupetugas','savePasswordBaruPetugas')->name('savepasswordbarupetugas');
+    Route::get('hapusdatapetugas/{id}','hapusDataPetugas')->name('hapusdatapetugas');
+    
     #Route For Kategori
     Route::get('kategori','kategori')->name('kategori');
     Route::get('tambahkategori','tambahKategori')->name('tambahkategori');
@@ -61,9 +66,12 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     Route::post('simpaneditkelas','simpanEditKelas')->name('simpaneditkelas');
     Route::get('hapuskelas/{id}','hapusKelas')->name('hapuskelas');
 
+    #Route For Buku
     Route::get('buku','buku')->name('buku');
     Route::get('tambahbuku','tambahBuku')->name('tambahbuku');
-
+    Route::post('simpantambahbuku','simpanTambahBuku')->name('simpantambahbuku');
+    Route::get('editbuku/{id}','editBuku')->name('editbuku');
+    Route::post('simpaneditbuku','simpanEditBuku')->name('simpaneditbuku');
 });
 
 Route::prefix('peminjaman')->controller(Cpeminjaman::class)->group(function(){

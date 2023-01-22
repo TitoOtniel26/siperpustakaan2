@@ -199,7 +199,7 @@ class Cmasterdata extends Controller
         return redirect()->route('siswa')->withErrors($result);
     }
 
-    public function savePasswordBaru(Request $request)
+    public function savePasswordBaruSiswa(Request $request)
     {
         $credentials = $request->validate([
             "id_siswa" => ["required"],
@@ -208,40 +208,33 @@ class Cmasterdata extends Controller
 
         $post = $request->all();
 
-        $query = DB::table('users')->where('id','=',base64_decode($post['id_siswa']))->update([
+        $query = DB::table('users')->where('id', '=', base64_decode($post['id_siswa']))->update([
             "password" => bcrypt($post['password'])
         ]);
 
-        if($query)
-        {
+        if ($query) {
             return back()->withErrors(["msg" => "Update Password Berhasil!"]);
-        }
-        else
-        {
+        } else {
             return back()->withErrors(["msg" => "Update Password Gagal!"]);
         }
     }
 
     public function hapusDataSiswa($id)
     {
-        $getdatasiswa = DB::table('users')->where('id','=',base64_decode($id))->get();
+        $getdatasiswa = DB::table('users')->where('id', '=', base64_decode($id))->get();
 
-        foreach($getdatasiswa as $item)
-        {
-            
+        foreach ($getdatasiswa as $item) {
+
             if (file_exists(public_path('img/assetimg/' . $item->foto))) {
                 unlink(public_path('img/assetimg/' . $item->foto));
             }
         }
 
-        $query = DB::table('users')->where('id','=',base64_decode($id))->delete();
+        $query = DB::table('users')->where('id', '=', base64_decode($id))->delete();
 
-        if($query)
-        {
+        if ($query) {
             return back()->withErrors(["msg" => "Hapus Data Berhasil!"]);
-        }
-        else
-        {
+        } else {
             return back()->withErrors(["msg" => "Hapus Data Gagal!"]);
         }
     }
@@ -253,6 +246,7 @@ class Cmasterdata extends Controller
         $data['collapsing'] = "true";
         $data['parentmenu'] = "master";
         $data['jsitem'] = ["petugas"];
+        $data['datapetugas'] = DB::table('users')->where('status', '=', 'Petugas')->get();
 
         return view('home', $data);
     }
@@ -268,6 +262,191 @@ class Cmasterdata extends Controller
 
         return view('home', $data);
     }
+
+    public function saveTambahPetugas(Request $request)
+    {
+        $credentials = $request->validate([
+            "no_identitas" => ["required"],
+            "nama_user" => ["required"],
+            "jenis_kelamin" => ["required"],
+            "alamat" => ["required"],
+            "no_telp" => ["required"],
+            "foto" => ["required"],
+            "username" => ["required"],
+            "password" => ["required"],
+        ]);
+
+        $post = $request->all();
+
+        $name = $request->file('foto')->getClientOriginalName();
+        $mergenamefoto = date('ymdhis') . $name;
+
+        $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+
+        $query = DB::table('users')->insert([
+            "no_identitas" => $post['no_identitas'],
+            "nama_user" => $post['nama_user'],
+            "jenis_kelamin" => $post['jenis_kelamin'],
+            "alamat" => $post['alamat'],
+            "no_telp" => $post['no_telp'],
+            "status" => "Petugas",
+            "foto" => $mergenamefoto,
+            "username" => $post['username'],
+            "password" => bcrypt($post['password'])
+        ]);
+
+        if ($query) {
+            $result =
+                [
+                    'msg' => 'Simpan Data Sukses'
+                ];
+        } else {
+            $result =
+                [
+                    'msg' => 'Simpan Data Gagal'
+                ];
+        }
+
+        return redirect()->route('petugas')->withErrors($result);
+    }
+
+    public function editPetugas($id)
+    {
+        $data['contentview'] = "masterdata/veditpetugas";
+        $data['collapsemenu'] = "kategori";
+        $data['collapsing'] = "true";
+        $data['parentmenu'] = "master";
+        $data['jsitem'] = ["kategori"];
+        $data['datapetugas'] = DB::table('users')->where('id', '=', base64_decode($id))->get();
+
+        return view('home', $data);
+    }
+
+    public function saveEditPetugas(Request $request)
+    {
+        $post = $request->all();
+        if (!$request->file('foto')) {
+            $credentials = $request->validate([
+                "id_petugas" => ["required"],
+                "no_identitas" => ["required"],
+                "nama_user" => ["required"],
+                "jenis_kelamin" => ["required"],
+                "alamat" => ["required"],
+                "no_telp" => ["required"],
+            ]);
+
+
+            $query = DB::table('users')->where('id', '=', base64_decode($request->id_petugas))->update([
+                "no_identitas" => $post['no_identitas'],
+                "nama_user" => $post['nama_user'],
+                "jenis_kelamin" => $post['jenis_kelamin'],
+                "alamat" => $post['alamat'],
+                "no_telp" => $post['no_telp'],
+                "status" => "Siswa",
+                "username" => $post['username'],
+            ]);
+
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Update Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Update Data Gagal'
+                    ];
+            }
+        } else {
+            $credentials = $request->validate([
+                "id_petugas" => ["required"],
+                "no_identitas" => ["required"],
+                "nama_user" => ["required"],
+                "jenis_kelamin" => ["required"],
+                "alamat" => ["required"],
+                "no_telp" => ["required"],
+                "foto" => ["required"],
+                "nama_foto_lama" => ["required"],
+            ]);
+
+
+            $name = $request->file('foto')->getClientOriginalName();
+            $mergenamefoto = date('ymdhis') . $name;
+            $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+
+            $namafotolama = base64_decode($post['nama_foto_lama']);
+
+            if (file_exists(public_path('img/assetimg/' . $namafotolama))) {
+                unlink(public_path('img/assetimg/' . $namafotolama));
+            }
+
+            $query = DB::table('users')->where('id', '=', base64_decode($request->id_petugas))->update([
+                "no_identitas" => $post['no_identitas'],
+                "nama_user" => $post['nama_user'],
+                "jenis_kelamin" => $post['jenis_kelamin'],
+                "alamat" => $post['alamat'],
+                "no_telp" => $post['no_telp'],
+                "username" => $post['username'],
+                "foto" => $mergenamefoto
+            ]);
+
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Update Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Update Data Gagal'
+                    ];
+            }
+        }
+
+        return redirect()->route('petugas')->withErrors($result);
+    }
+
+    public function savePasswordBaruPetugas(Request $request)
+    {
+        $credentials = $request->validate([
+            "id_petugas" => ["required"],
+            "password" => ["required"]
+        ]);
+
+        $post = $request->all();
+
+        $query = DB::table('users')->where('id', '=', base64_decode($post['id_petugas']))->update([
+            "password" => bcrypt($post['password'])
+        ]);
+
+        if ($query) {
+            return back()->withErrors(["msg" => "Update Password Berhasil!"]);
+        } else {
+            return back()->withErrors(["msg" => "Update Password Gagal!"]);
+        }
+    }
+
+    public function hapusDataPetugas($id)
+    {
+        $getdatapetugas = DB::table('users')->where('id', '=', base64_decode($id))->get();
+
+        foreach ($getdatapetugas as $item) {
+
+            if (file_exists(public_path('img/assetimg/' . $item->foto))) {
+                unlink(public_path('img/assetimg/' . $item->foto));
+            }
+        }
+
+        $query = DB::table('users')->where('id', '=', base64_decode($id))->delete();
+
+        if ($query) {
+            return back()->withErrors(["msg" => "Hapus Data Berhasil!"]);
+        } else {
+            return back()->withErrors(["msg" => "Hapus Data Gagal!"]);
+        }
+    }
+
+
 
     public function kategori()
     {
@@ -596,6 +775,8 @@ class Cmasterdata extends Controller
         $data['collapsing'] = "true";
         $data['parentmenu'] = "master";
         $data['jsitem'] = ["buku"];
+        $data['datakategori'] = $this->kategori->get();
+        $data['databuku'] = DB::select("SELECT * FROM `buku` INNER JOIN kategori on kategori.id = buku.id_kategori INNER JOIN rak on rak.id = buku.id_rak");
 
         return view('home', $data);
     }
@@ -607,7 +788,158 @@ class Cmasterdata extends Controller
         $data['collapsing'] = "true";
         $data['parentmenu'] = "master";
         $data['jsitem'] = ["buku"];
+        $data['datakategori'] = $this->kategori->get();
+        $data['datarak'] = $this->rak->get();
 
         return view('home', $data);
+    }
+
+    public function simpanTambahBuku(Request $request)
+    {
+        $credentials = $request->validate([
+            "kode_buku" => ["required"],
+            "judul_buku" => ["required"],
+            "id_kategori" => ["required"],
+            "id_rak" => ["required"],
+            "tahun_buku" => ["required"],
+            "penerbit" => ["required"],
+            "pengarang" => ["required"],
+            "jumlah" => ["required"],
+            "deskripsi" => ["required"],
+            "foto" => ["required"]
+        ]);
+
+        $post = $request->all();
+
+
+        $name = $request->file('foto')->getClientOriginalName();
+        $mergenamefoto = date('ymdhis') . $name;
+        $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+
+        $query = DB::table('buku')->insert([
+            "kode_buku" => $post["kode_buku"],
+            "judul_buku" => $post["judul_buku"],
+            "id_kategori" => $post["id_kategori"],
+            "tahun_buku" => $post["tahun_buku"],
+            "penerbit" => $post["penerbit"],
+            "pengarang" => $post["pengarang"],
+            "id_rak" => $post["id_rak"],
+            "jumlah" => $post["jumlah"],
+            "foto" => $mergenamefoto,
+            "deskripsi" => $post["deskripsi"],
+        ]);
+
+        if ($query) {
+            $result =
+                [
+                    'msg' => 'Simpan Data Sukses'
+                ];
+        } else {
+            $result =
+                [
+                    'msg' => 'Simpan Data Gagal'
+                ];
+        }
+
+        return redirect()->route('buku')->withErrors($result);
+    }
+
+    public function editBuku($id)
+    {
+        $data['contentview'] = "masterdata/veditbuku";
+        $data['collapsemenu'] = "buku";
+        $data['collapsing'] = "true";
+        $data['parentmenu'] = "master";
+        $data['jsitem'] = ["buku"];
+        $data['databuku'] = DB::select("SELECT * FROM `buku` INNER JOIN kategori on kategori.id = buku.id_kategori INNER JOIN rak on rak.id = buku.id_rak WHERE buku.kode_buku = '" . base64_decode($id) . "'");
+        $data['datakategori'] = $this->kategori->get();
+        $data['datarak'] = $this->rak->get();
+
+        return view('home', $data);
+    }
+
+    public function simpanEditBuku(Request $request)
+    {
+        $post = $request->all();
+        $result = "";
+        if (!$request->file('foto')) {
+            $credentials = $request->validate([
+                "kode_buku" => ["required"],
+                "judul_buku" => ["required"],
+                "id_kategori" => ["required"],
+                "id_rak" => ["required"],
+                "tahun_buku" => ["required"],
+                "penerbit" => ["required"],
+                "pengarang" => ["required"],
+                "jumlah" => ["required"],
+                "deskripsi" => ["required"],
+            ]);
+
+            $query = DB::table('buku')->where('kode_buku', '=', $post['kode_buku_lama'])->update([
+                "kode_buku" => $post["kode_buku"],
+                "judul_buku" => $post["judul_buku"],
+                "id_kategori" => $post["id_kategori"],
+                "tahun_buku" => $post["tahun_buku"],
+                "penerbit" => $post["penerbit"],
+                "pengarang" => $post["pengarang"],
+                "id_rak" => $post["id_rak"],
+                "jumlah" => $post["jumlah"],
+                "deskripsi" => $post["deskripsi"],
+            ]);
+
+            if ($query) {
+                $result =
+                    [
+                        'msg' => 'Simpan Data Sukses'
+                    ];
+            } else {
+                $result =
+                    [
+                        'msg' => 'Simpan Data Gagal'
+                    ];
+            }
+        } else {
+            $credentials = $request->validate([
+                "kode_buku_lama" => ["required"],
+                "kode_buku" => ["required"],
+                "judul_buku" => ["required"],
+                "id_kategori" => ["required"],
+                "id_rak" => ["required"],
+                "tahun_buku" => ["required"],
+                "penerbit" => ["required"],
+                "pengarang" => ["required"],
+                "jumlah" => ["required"],
+                "deskripsi" => ["required"],
+                "foto" => ["required"],
+                "nama_foto_lama" => ["required"],
+            ]);
+
+
+            $name = $request->file('foto')->getClientOriginalName();
+            $mergenamefoto = date('ymdhis') . $name;
+            $path = $request->file('foto')->move('img/assetimg', $mergenamefoto);
+
+            $namafotolama = base64_decode($post['nama_foto_lama']);
+
+            if (file_exists(public_path('img/assetimg/' . $namafotolama))) {
+                unlink(public_path('img/assetimg/' . $namafotolama));
+            }
+
+
+            $query = DB::table('buku')->where('kode_buku', '=', $post['kode_buku_lama'])->update([
+                "kode_buku" => $post["kode_buku"],
+                "judul_buku" => $post["judul_buku"],
+                "id_kategori" => $post["id_kategori"],
+                "tahun_buku" => $post["tahun_buku"],
+                "penerbit" => $post["penerbit"],
+                "pengarang" => $post["pengarang"],
+                "id_rak" => $post["id_rak"],
+                "jumlah" => $post["jumlah"],
+                "deskripsi" => $post["deskripsi"],
+                "foto" => $mergenamefoto
+            ]);
+        }
+
+        return redirect()->route('buku')->withErrors($result);
     }
 }

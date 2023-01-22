@@ -27,8 +27,8 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $item->namarak }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('editrak',['id'=> base64_encode($item->id)]) }}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a href="{{ route('hapusrak',['id' => base64_encode($item->id)]) }}" type="button" class="btn btn-danger btn-sm btnhapus"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('editrak',['id'=> base64_encode($item->id)]) }}" type="button" class="btn btn-primary btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('hapusrak',['id' => base64_encode($item->id)]) }}" type="button" class="btn btn-danger btn-sm btnhapus"  data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

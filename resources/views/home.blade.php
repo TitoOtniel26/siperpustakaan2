@@ -82,7 +82,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block text-center">SISTEM INFORMASI PERPUSTAKAAN</span>
             </a>
@@ -359,14 +359,16 @@
 
 
             <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'pengadaan' ? '' : 'collapsed' ?>" href="{{ route('pencarianbuku') }}">
+                <a class="nav-link <?= $parentmenu == 'pengadaan' ? '' : 'collapsed' ?>"
+                    href="{{ route('pencarianbuku') }}">
                     <i class="fa fa-search"></i>
                     <span>Cari Buku</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'peminjaman' ? '' : 'collapsed' ?>" href="{{ route('peminjaman') }}">
+                <a class="nav-link <?= $parentmenu == 'peminjaman' ? '' : 'collapsed' ?>"
+                    href="{{ route('peminjaman') }}">
                     <i class="fa fa-upload"></i>
                     <span>Peminjaman</span>
                 </a>
@@ -375,7 +377,8 @@
 
 
             <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'pengembalian' ? '' : 'collapsed' ?>" href="{{ route('pengembalian') }}">
+                <a class="nav-link <?= $parentmenu == 'pengembalian' ? '' : 'collapsed' ?>"
+                    href="{{ route('pengembalian') }}">
                     <i class="fa fa-download"></i>
                     <span>Pengembalian</span>
                 </a>
@@ -383,7 +386,8 @@
 
 
             <li class="nav-item">
-                <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>" href="{{ route('laporan') }}">
+                <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>"
+                    href="{{ route('laporan') }}">
                     <i class="ri-newspaper-line"></i>
                     <span>Laporan</span>
                 </a>
@@ -471,6 +475,35 @@
         function enum_item(value, listenum) {
             if (value == listenum) {
                 return 'selected';
+            }
+        }
+
+        function tampilkanPreview(gambar, idpreview) {
+            //                membuat objek gambar
+            var gb = gambar.files;
+            //                loop untuk merender gambFar
+            for (var i = 0; i < gb.length; i++) {
+                //                    bikin variabel
+                var gbPreview = gb[i];
+                var imageType = /image.*/;
+                var preview = document.getElementById(idpreview);
+                var reader = new FileReader();
+                if (gbPreview.type.match(imageType)) {
+                    //                        jika tipe data sesuai
+                    preview.file = gbPreview;
+                    reader.onload = (function(element) {
+                        return function(e) {
+                            element.src = e.target.result;
+                        };
+                    })(preview);
+                    //                    membaca data URL gambar
+                    reader.readAsDataURL(gbPreview);
+                } else {
+                    //                        jika tipe data tidak sesuai
+                    alert(
+                        "Hanya dapat menampilkan preview tipe gambar. Harap simpan perubahan untuk melihat dan merubah gambar."
+                    );
+                }
             }
         }
     </script>
