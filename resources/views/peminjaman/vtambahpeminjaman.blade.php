@@ -32,8 +32,8 @@
                             @foreach ($datasiswa as $item)
                                 <option value="{{ $item->id }}" noidentitas="{{ $item->no_identitas }}">
                                     {{ $item->no_identitas }} - {{ $item->nama_user }}</option>
+                            @endforeach
                         </select>
-                        @endforeach
                     </div>
                     <div class="form-group">
                         <label for="">Judul Buku</label><br>

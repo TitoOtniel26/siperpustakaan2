@@ -26,7 +26,7 @@ class Cpeminjaman extends Controller
         $data['collapsing'] = "false";
         $data['parentmenu'] = "peminjaman";
         $data['jsitem'] = ["peminjaman"];
-        $data['datasiswa'] = DB::table('users')->where('status', '=', 'Siswa')->get();
+        $data['datasiswa'] = DB::table('users')->where('status', '=', 'Siswa')->where('is_pinjam','=',0)->get();
         $data['databuku'] = DB::table('buku')->get();
 
         return view('home', $data);

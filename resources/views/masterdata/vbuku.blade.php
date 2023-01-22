@@ -12,7 +12,7 @@
                     </div>
                 @endif
                 <div class="table-responsive mt-3">
-                    <table class="table table-hover table-bordered" id="tbperpustakaan"
+                    <table class="table table-hover table-bordered display" id="tbperpustakaan"
                         style="width : 100%; table-layout : fixed;">
                         <thead>
                             <tr>
