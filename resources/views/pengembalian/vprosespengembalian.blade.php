@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Nominal Denda</label>
-                            <input type="text" name="nominaldenda" value="{{ $item->nominaldenda }}"
+                            <input type="text" name="nominaldenda" value="{{ $item->nominaldenda < 0 ? 0 : $item->nominaldenda }}"
                                 class="form-control" readonly>
                         </div>
                     @endforeach

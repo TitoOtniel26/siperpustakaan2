@@ -3,7 +3,7 @@
         <div class="card h-100">
             <h5 class="card-header"><strong>Laporan</strong></h5>
             <div class="card-body">
-                <form action="" method="POST" target="_blank" class="mt-3">
+                <form action="{{ route('printlaporan') }}" method="POST" target="_blank" class="mt-3">
                     @csrf
                     <table style="width : 100%;">
                         <tbody>
@@ -13,8 +13,8 @@
                                 <td>
                                     <select name="jenislaporan" id="" class="form-control">
                                         <option value="">-- PILIH JENIS LAPORAN--</option>
-                                        <option value="1">Pengadaan</option>
-                                        <option value="2">Pengeluaran</option>
+                                        <option value="1">Peminjaman</option>
+                                        <option value="2">Pengembalian</option>
                                     </select>
                                 </td>
                                 <td rowspan="3" class="text-center">

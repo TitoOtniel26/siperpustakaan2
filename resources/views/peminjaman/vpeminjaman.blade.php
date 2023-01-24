@@ -54,6 +54,9 @@
                                     <td>{{ date('d-m-Y', strtotime($item->tgl_pinjam)) }}</td>
                                     <td>{{ date('d-m-Y', strtotime($item->tgl_kembali)) }}</td>
                                     <td class="text-center">
+                                        @if($item->is_selesai == 1)
+                                            <span>Selesai</span>
+                                        @else
                                         <a href="{{ route('editdatapeminjaman', ['id' => base64_encode($item->id)]) }}"
                                             type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="Detail Data"><i class="fa fa-pencil"></i></a>
@@ -61,6 +64,7 @@
                                             type="button" class="btn btn-danger btn-sm btnhapus"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i
                                                 class="fa fa-trash"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

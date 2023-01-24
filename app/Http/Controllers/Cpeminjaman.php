@@ -14,7 +14,7 @@ class Cpeminjaman extends Controller
         $data['collapsing'] = "false";
         $data['parentmenu'] = "peminjaman";
         $data['jsitem'] = ["peminjaman"];
-        $data['datapeminjaman'] = DB::select("select peminjaman.id, (select users.nama_user from users where users.id = peminjaman.id_user) as namapetugas, (select users.nama_user from users where users.id = peminjaman.id_anggota) as namaanggota, peminjaman.tgl_pinjam, peminjaman.tgl_kembali from peminjaman WHERE peminjaman.is_selesai = 0");
+        $data['datapeminjaman'] = DB::select("select peminjaman.id, (select users.nama_user from users where users.id = peminjaman.id_user) as namapetugas, (select users.nama_user from users where users.id = peminjaman.id_anggota) as namaanggota, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.is_selesai from peminjaman");
 
         return view('home', $data);
     }

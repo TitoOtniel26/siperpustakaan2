@@ -102,6 +102,7 @@ Route::prefix('pencarianbuku')->controller(Cpencarianbuku::class)->group(functio
 
 Route::prefix('laporan')->controller(Claporan::class)->group(function(){
     Route::get('/','laporan')->name('laporan');
+    Route::post('printlaporan','printLaporan')->name('printlaporan');
 });
 
 

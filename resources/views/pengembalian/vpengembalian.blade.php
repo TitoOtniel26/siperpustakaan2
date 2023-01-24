@@ -46,9 +46,9 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->id_peminjaman }}</td>
-                                    <td>{{ $item->tanggal_pengembalian }}</td>
+                                    <td>{{ date('d-m-Y',strtotime($item->tanggal_pengembalian)) }}</td>
                                     <td>{{ $item->namapetugas }}</td>
-                                    <td>{{ $item->namapetugas }}</td>
+                                    <td>@currency($item->nominaldenda)</td>
                                     <td>
                                         <a href="{{ route('detailpengembalian', ['id' => base64_encode($item->id)]) }}"
                                             type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip"
