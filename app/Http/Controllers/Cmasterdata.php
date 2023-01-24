@@ -46,7 +46,7 @@ class Cmasterdata extends Controller
         return view('home', $data);
     }
 
-    public function saveTambahSiswa(Request $request)
+    public function simpaneditprofil(Request $request)
     {
         $credentials = $request->validate([
             "foto" => ["required"],
@@ -132,8 +132,7 @@ class Cmasterdata extends Controller
                 "kelas" => $post['kelas'],
                 "no_telp" => $post['no_telp'],
                 "status" => "Siswa",
-                "username" => $post['username'],
-                "password" => bcrypt($post['password'])
+                "username" => $post['username']
             ]);
 
             if ($query) {
@@ -342,7 +341,7 @@ class Cmasterdata extends Controller
                 "jenis_kelamin" => $post['jenis_kelamin'],
                 "alamat" => $post['alamat'],
                 "no_telp" => $post['no_telp'],
-                "status" => "Siswa",
+                "status" => "Petugas",
                 "username" => $post['username'],
             ]);
 

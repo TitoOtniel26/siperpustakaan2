@@ -16,6 +16,19 @@ class Cpeminjaman extends Controller
         $data['jsitem'] = ["peminjaman"];
         $data['datapeminjaman'] = DB::select("select peminjaman.id, (select users.nama_user from users where users.id = peminjaman.id_user) as namapetugas, (select users.nama_user from users where users.id = peminjaman.id_anggota) as namaanggota, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.is_selesai from peminjaman");
 
+        if(auth()->user()->status == "Siswa")
+        {
+            $idsiswa = auth()->user()->id;
+            $data['datadetailpeminjaman'] = DB::select("SELECT * FROM detail_peminjaman
+            INNER JOIN peminjaman on peminjaman.id = detail_peminjaman.id_peminjaman
+            INNER JOIN buku on buku.kode_buku = detail_peminjaman.id_buku
+            INNER JOIN kategori on kategori.id = buku.id_kategori
+            INNER JOIN rak on rak.id = buku.id_rak
+            WHERE peminjaman.id_anggota  = '".$idsiswa."' AND peminjaman.is_selesai = 0");
+        }
+
+        // dd($data);
+
         return view('home', $data);
     }
 

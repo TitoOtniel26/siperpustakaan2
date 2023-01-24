@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Clandingpage;
 use App\Http\Controllers\Claporan;
 use App\Http\Controllers\Cmasterdata;
 use App\Http\Controllers\Cpeminjaman;
@@ -19,10 +20,10 @@ use App\Http\Controllers\Cpencarianbuku;
 */
 
 Route::get('/', function () {
-    return redirect()->route('siswa');
+    return redirect()->route('dashboard');
 });
 
-Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
+Route::prefix('master')->middleware(['auth','blocksiswa'])->controller(Cmasterdata::class)->group(function(){
 
     #Route For Siswa
     Route::get('siswa','siswa')->name('siswa');
@@ -75,17 +76,17 @@ Route::prefix('master')->controller(Cmasterdata::class)->group(function(){
     Route::get('hapusdatabuku/{id}','hapusDatabuku')->name('hapusdatabuku');
 });
 
-Route::prefix('peminjaman')->controller(Cpeminjaman::class)->group(function(){
+Route::prefix('peminjaman')->middleware(['auth'])->controller(Cpeminjaman::class)->group(function(){
     Route::get('/','peminjaman')->name('peminjaman');
-    Route::get('tambahpeminjaman','tambahPeminjaman')->name('tambahpeminjaman');
+    Route::get('tambahpeminjaman','tambahPeminjaman')->name('tambahpeminjaman')->middleware(['blocksiswa']);
     Route::post('getdatabuku','getDataBuku')->name('getdatabuku');
-    Route::post('simpanpeminjaman','simpanPeminjaman')->name('simpanpeminjaman');
-    Route::get('editdatapeminjaman/{id}','editDatapeminjaman')->name('editdatapeminjaman');
-    Route::get('hapusdatapeminjaman/{id}','hapusDataPeminjaman')->name('hapusdatapeminjaman');
+    Route::post('simpanpeminjaman','simpanPeminjaman')->name('simpanpeminjaman')->middleware(['blocksiswa']);
+    Route::get('editdatapeminjaman/{id}','editDatapeminjaman')->name('editdatapeminjaman')->middleware(['blocksiswa']);
+    Route::get('hapusdatapeminjaman/{id}','hapusDataPeminjaman')->name('hapusdatapeminjaman')->middleware(['blocksiswa']);
     Route::post('caripeminjaman','cariDataPeminjaman')->name('caripeminjaman');
 });
 
-Route::prefix('pengembalian')->controller(Cpengembalian::class)->group(function(){
+Route::prefix('pengembalian')->middleware(['auth','blocksiswa'])->controller(Cpengembalian::class)->group(function(){
     Route::get('/','pengembalian')->name('pengembalian');
     Route::get('tambahpengembalian','tambahPengembalian')->name('tambahpengembalian');
     Route::get('prosespengembalian/{id}','prosesPengembalian')->name('prosespengembalian');
@@ -95,14 +96,26 @@ Route::prefix('pengembalian')->controller(Cpengembalian::class)->group(function(
     Route::get('hapusdetailpengembalian/{id}','hapusDetailPengembalian')->name('hapusdetailpengembalian');
 });
 
-Route::prefix('pencarianbuku')->controller(Cpencarianbuku::class)->group(function(){
+Route::prefix('pencarianbuku')->middleware(['auth'])->controller(Cpencarianbuku::class)->group(function(){
     Route::get('/','pencarianbuku')->name('pencarianbuku');
     Route::get('detailbuku/{id}','detailBuku')->name('detailbuku');
 });
 
-Route::prefix('laporan')->controller(Claporan::class)->group(function(){
+Route::prefix('laporan')->middleware(['auth','blocksiswa'])->controller(Claporan::class)->group(function(){
     Route::get('/','laporan')->name('laporan');
     Route::post('printlaporan','printLaporan')->name('printlaporan');
+});
+
+Route::prefix('/')->controller(Clandingpage::class)->group(function(){
+    Route::get('dashboard','dashboard')->name('dashboard')->middleware(['auth','blocksiswa']);
+    Route::get('login','login')->name('login')->middleware(['guest']);
+    Route::post('authentication','authentication')->name('authentication')->middleware(['guest']);
+    Route::get('logout','logout')->name('logout')->middleware(['auth']);
+    Route::get('myprofile','myProfile')->name('myprofile')->middleware(['auth']);
+    Route::post('simpaneditprofil','simpaneditprofil')->name('simpaneditprofil')->middleware(['auth']);
+    Route::post('simpanpasswordprofilbaru','simpanpasswordprofilbaru')->name('simpanpasswordprofilbaru')->middleware(['auth']);
+    Route::get('signup','signup')->name('signup')->middleware(['guest']);
+    Route::post('savesignupdata','saveSignUpData')->name('savesignupdata')->middleware(['guest']);
 });
 
 

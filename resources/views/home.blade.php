@@ -243,22 +243,25 @@
 
                 <li class="nav-item dropdown pe-3">
 
+
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+                        
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->nama_user }}</span>
                     </a><!-- End Profile Iamge Icon -->
+                    <!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6></h6>
-                            <span></span>
+                            <h6>{{auth()->user()->nama_user}}</h6>
+                            <span>({{auth()->user()->status}})</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
-                        {{-- <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('myprofile') }}">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -267,7 +270,7 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                 <i class="bi bi-gear"></i>
                                 <span>Account Settings</span>
@@ -282,13 +285,13 @@
                                 <i class="bi bi-question-circle"></i>
                                 <span>Need Help?</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <hr class="dropdown-divider">
-                        </li> --}}
+                        </li> 
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -308,53 +311,60 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
 
-            <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'dashboard' ? '' : 'collapsed' ?>" href="">
-                    <i class="ri-home-4-fill"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+            @if (auth()->user()->status == 'Petugas')
+                <li class="nav-item">
+                    <a class="nav-link <?= $parentmenu == 'dashboard' ? '' : 'collapsed' ?>"
+                        href="{{ route('dashboard') }}">
+                        <i class="ri-home-4-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            @endif
 
 
-            <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'master' ? '' : 'collapsed' ?>" data-bs-target="#components-nav"
-                    data-bs-toggle="collapse" href="#">
-                    <i class="ri-list-check"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content {{ $collapsing == 'true' ? 'collapse show' : 'collapse' }} "
-                    data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a class="{{ $collapsemenu == 'siswa' ? 'active' : '' }}" href="{{ route('siswa') }}">
-                            <i class="bi bi-circle"></i><span>Siswa</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('petugas') }}" class="{{ $collapsemenu == 'petugas' ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Petugas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $collapsemenu == 'kategori' ? 'active' : '' }}" href="{{ route('kategori') }}">
-                            <i class="bi bi-circle"></i><span>Kategori</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $collapsemenu == 'rak' ? 'active' : '' }}" href="{{ route('rak') }}">
-                            <i class="bi bi-circle"></i><span>Rak</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $collapsemenu == 'kelas' ? 'active' : '' }}" href="{{ route('kelas') }}">
-                            <i class="bi bi-circle"></i><span>Kelas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $collapsemenu == 'buku' ? 'active' : '' }}" href="{{ route('buku') }}">
-                            <i class="bi bi-circle"></i><span>Buku</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @if (auth()->user()->status == 'Petugas')
+                <li class="nav-item">
+                    <a class="nav-link <?= $parentmenu == 'master' ? '' : 'collapsed' ?>"
+                        data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="ri-list-check"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="components-nav"
+                        class="nav-content {{ $collapsing == 'true' ? 'collapse show' : 'collapse' }} "
+                        data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a class="{{ $collapsemenu == 'siswa' ? 'active' : '' }}" href="{{ route('siswa') }}">
+                                <i class="bi bi-circle"></i><span>Siswa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('petugas') }}" class="{{ $collapsemenu == 'petugas' ? 'active' : '' }}">
+                                <i class="bi bi-circle"></i><span>Petugas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $collapsemenu == 'kategori' ? 'active' : '' }}"
+                                href="{{ route('kategori') }}">
+                                <i class="bi bi-circle"></i><span>Kategori</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $collapsemenu == 'rak' ? 'active' : '' }}" href="{{ route('rak') }}">
+                                <i class="bi bi-circle"></i><span>Rak</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $collapsemenu == 'kelas' ? 'active' : '' }}" href="{{ route('kelas') }}">
+                                <i class="bi bi-circle"></i><span>Kelas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $collapsemenu == 'buku' ? 'active' : '' }}" href="{{ route('buku') }}">
+                                <i class="bi bi-circle"></i><span>Buku</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
 
 
@@ -376,22 +386,23 @@
 
 
 
-            <li class="nav-item">
-                <a class="nav-link <?= $parentmenu == 'pengembalian' ? '' : 'collapsed' ?>"
-                    href="{{ route('pengembalian') }}">
-                    <i class="fa fa-download"></i>
-                    <span>Pengembalian</span>
-                </a>
-            </li>
+            @if (auth()->user()->status == 'Petugas')
+                <li class="nav-item">
+                    <a class="nav-link <?= $parentmenu == 'pengembalian' ? '' : 'collapsed' ?>"
+                        href="{{ route('pengembalian') }}">
+                        <i class="fa fa-download"></i>
+                        <span>Pengembalian</span>
+                    </a>
+                </li>
 
-
-            <li class="nav-item">
-                <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>"
-                    href="{{ route('laporan') }}">
-                    <i class="ri-newspaper-line"></i>
-                    <span>Laporan</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link  <?= $parentmenu == 'laporan' ? '' : 'collapsed' ?>"
+                        href="{{ route('laporan') }}">
+                        <i class="ri-newspaper-line"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+            @endif
 
             <!-- End Components Nav -->
         </ul>

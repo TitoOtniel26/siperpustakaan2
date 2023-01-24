@@ -72,7 +72,7 @@
                             <tr>
                                 <td>
                                     <div class="text-center mt-1">
-                                        <a href="{{ route('buku') }}" type="button" class="btn btn-danger btn-md">KEMBALI</a>
+                                        <a href="{{ route('pencarianbuku') }}" type="button" class="btn btn-danger btn-md">KEMBALI</a>
                                     </div>
                                 </td>
                             </tr>
