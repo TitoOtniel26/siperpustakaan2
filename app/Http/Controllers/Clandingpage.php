@@ -67,7 +67,7 @@ class Clandingpage extends Controller
         return redirect()->route('login');
     }
 
-    public function myProfile($id)
+    public function myProfile()
     {
         $idsiswa = auth()->user()->id;
 
