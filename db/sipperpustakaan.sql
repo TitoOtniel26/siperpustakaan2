@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2023 at 01:04 PM
+-- Generation Time: Jan 29, 2023 at 08:44 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -268,7 +268,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `no_identitas`, `nama_user`, `jenis_kelamin`, `alamat`, `kelas`, `no_telp`, `status`, `foto`, `is_pinjam`, `remember_token`, `username`, `password`) VALUES
-(6, '1234567890', 'Tito Otniels', 'Laki-Laki', 'Helvetia', 3, '085742645203', 'Siswa', '230122050131SI 518063110065 Tito Otniel _CPC2472 (2) copy_11zon.jpg', 1, NULL, 'tito', '$2y$10$fDXxHhxb1iacDL/O.XZTFu5YH8Q.1rsXgKt/T29AtbiWeOSjDSNs6'),
+(6, '1234567890', 'Tito Otniels', 'Laki-Laki', 'Helvetia', 3, '085742645203', 'Siswa', '230122050131SI 518063110065 Tito Otniel _CPC2472 (2) copy_11zon.jpg', 1, NULL, 'tito', '$2y$10$5uhaqemNMYWwwXiElYP5ou4y2bCdERqrhpBjyVHXKUEJLI6n2vBX2'),
 (7, '123456789', 'Anjay', 'Laki-Laki', 'Jln Alamat', NULL, '085742645203', 'Petugas', '230122065553SI 518063110065 Tito Otniel _CPC2472 (2) copy_11zon.jpg', 0, NULL, 'salah', '$2y$10$IR4pH7Mg7WEGXV8v8BzGZukP7iru9dcew8ek1yXSln4fWSplr9GjS'),
 (8, '12345678954645', 'Jalan', 'Laki-Laki', 'Alamat', 3, '235324534', 'Siswa', '230124070147Screenshot 2023-01-19 141135.png', 0, NULL, 'bayu', '$2y$10$NSky7v8l2lS7Wv0Lxa.qG.UycmGh7QUEk7IyQXDrg5fhFcuxJcZUa');
 
